@@ -65,7 +65,7 @@ with col2:
     st.session_state.job_description = job_description
 
 # Evaluation button
-if st.button("Evaluate Resume") and st.session_state.resume_text and st.session_state.job_description:
+if st.button("Evaluate Resume", key="evaluate_button_primary") and st.session_state.resume_text and st.session_state.job_description:
     with st.spinner("Evaluating resume against job description..."):
         try:
             evaluation_result = evaluate_resume(st.session_state.resume_text, st.session_state.job_description)
@@ -73,7 +73,7 @@ if st.button("Evaluate Resume") and st.session_state.resume_text and st.session_
             st.session_state.evaluation_done = True
         except Exception as e:
             st.error(f"Error during evaluation: {str(e)}")
-elif st.button("Evaluate Resume") and (not st.session_state.resume_text or not st.session_state.job_description):
+elif st.button("Evaluate Resume", key="evaluate_button_warning") and (not st.session_state.resume_text or not st.session_state.job_description):
     st.warning("Please upload a resume and enter a job description to proceed with evaluation.")
 
 # Display evaluation results
