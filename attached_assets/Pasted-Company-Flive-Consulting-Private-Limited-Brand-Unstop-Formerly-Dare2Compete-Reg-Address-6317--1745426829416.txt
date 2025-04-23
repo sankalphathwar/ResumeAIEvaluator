@@ -1,0 +1,38 @@
+Company: Flive Consulting Private Limited Brand: Unstop (Formerly Dare2Compete)
+Reg Address: #6317, Sector B-9, Vasant Kunj, New Delhi, 110070 | www.unstop.com
+GST:07AADCF7366C1ZP PAN: AADCF7366C
+HR-Tech Innovation Challenge: AI-Powered Resume Screening
+& Employee Engagement Analysis
+Problem Statement
+In this assignment let’s aims to automate two critical HR processes:
+1. Resume Screening: Develop an AI tool to filter resumes for a "Software Engineer" role by matching
+skills, experience, and qualifications from job descriptions.
+2. Employee Sentiment Analysis: Analyze employee feedback (e.g., surveys, exit interviews) to predict
+attrition risks and recommend engagement strategies.
+Your Task:
+1. Use Azure AI Studio or Google AI Studio to build and deploy models for the above tasks.
+2. Apply prompt engineering to optimize outputs from large language models (LLMs) for accuracy and
+relevance.
+3. Propose a detailed technical approach, including data pipelines, model selection, and integration
+strategies.
+Deliverables
+1. Technical Report (PDF):
+○ Problem understanding and proposed solution.
+○ Workflow diagram of your AI pipeline.
+○ Details of prompts designed for LLMs (e.g., GPT-4) to extract resume keywords or analyze
+sentiment.
+○ Screenshots of your Azure/Google AI Studio workspace (model training, deployment).
+○ Challenges faced and how you resolved them.
+2. Code & Deployment (Bonus):
+○ Clean, documented code for data preprocessing, model training, and inference.
+○ Deploy at least one model as an API endpoint using Azure/Google AI Studio.
+3. Presentation (5-7 slides):
+○ Summarize your solution, results, and business impact.
+Submission Guidelines
+1. Submit a ZIP file containing:
+2. Technical report (PDF).
+3. Code files (Jupyter Notebooks, Python scripts).
+4. Presentation (PDF/PPT).
+5. API endpoint link (if deployed).
+6. Deadline: 7 days from assignment receipt.
+Note: Plagiarism or use of pre-built solutions (e.g., Copying GitHub repos) will result in disqualification.
