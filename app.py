@@ -5,7 +5,10 @@ import tempfile
 from resume_parser import parse_resume
 from resume_evaluator import evaluate_resume
 from sentiment_analyzer import analyze_sentiment
+from database import store_resume_evaluation, get_resume_evaluations, store_sentiment_analysis, get_sentiment_analyses
 import base64
+import json
+import datetime
 import plotly.graph_objects as go
 
 st.set_page_config(
@@ -90,6 +93,18 @@ with tab1:
                     evaluation_result = evaluate_resume(st.session_state.resume_text, st.session_state.job_description)
                     st.session_state.evaluation_result = evaluation_result
                     st.session_state.evaluation_done = True
+                    
+                    # Store in database
+                    try:
+                        store_resume_evaluation(
+                            resume_text=st.session_state.resume_text,
+                            job_description=st.session_state.job_description,
+                            result=evaluation_result
+                        )
+                        st.success("Evaluation saved to database successfully!")
+                    except Exception as db_error:
+                        st.warning(f"Evaluation completed but could not be saved to database: {str(db_error)}")
+                        
                 except Exception as e:
                     st.error(f"Error during evaluation: {str(e)}")
         else:
