@@ -188,6 +188,23 @@ with tab1:
         b64 = base64.b64encode(report.encode()).decode()
         href = f'<a href="data:file/txt;base64,{b64}" download="resume_evaluation_report.txt">Download Report</a>'
         st.markdown(href, unsafe_allow_html=True)
+        
+    # Show previous evaluations from database
+    st.header("Previous Evaluations")
+    try:
+        evaluations = get_resume_evaluations(limit=5)
+        if evaluations:
+            for i, eval_record in enumerate(evaluations):
+                with st.expander(f"Evaluation #{eval_record.id} - {eval_record.recommendation} ({eval_record.overall_match_score}/10) - {eval_record.timestamp.strftime('%Y-%m-%d %H:%M')}"):
+                    result = eval_record.result
+                    st.write(f"**Match Score:** {result.get('overall_match_score', 'N/A')}/10")
+                    st.write(f"**Recommendation:** {result.get('recommendation', 'N/A')}")
+                    st.write(f"**Skills Matched:** {', '.join(result.get('key_skills_matched', ['N/A']))}")
+                    st.write(f"**Missing Areas:** {', '.join(result.get('missing_weak_areas', ['N/A']))}")
+        else:
+            st.info("No previous resume evaluations found.")
+    except Exception as e:
+        st.error(f"Error loading previous evaluations: {str(e)}")
 
 with tab2:
     st.title("Employee Sentiment Analysis")
@@ -214,6 +231,17 @@ with tab2:
                     sentiment_result = analyze_sentiment(st.session_state.feedback_text)
                     st.session_state.sentiment_result = sentiment_result
                     st.session_state.sentiment_analysis_done = True
+                    
+                    # Store in database
+                    try:
+                        store_sentiment_analysis(
+                            feedback_text=st.session_state.feedback_text,
+                            result=sentiment_result
+                        )
+                        st.success("Sentiment analysis saved to database successfully!")
+                    except Exception as db_error:
+                        st.warning(f"Sentiment analysis completed but could not be saved to database: {str(db_error)}")
+                        
                 except Exception as e:
                     st.error(f"Error during sentiment analysis: {str(e)}")
         else:
@@ -302,6 +330,24 @@ with tab2:
         b64 = base64.b64encode(report.encode()).decode()
         href = f'<a href="data:file/txt;base64,{b64}" download="employee_sentiment_report.txt">Download Report</a>'
         st.markdown(href, unsafe_allow_html=True)
+        
+    # Show previous sentiment analyses from database
+    st.header("Previous Sentiment Analyses")
+    try:
+        sentiments = get_sentiment_analyses(limit=5)
+        if sentiments:
+            for i, sentiment_record in enumerate(sentiments):
+                with st.expander(f"Analysis #{sentiment_record.id} - {sentiment_record.attrition_risk} Risk ({sentiment_record.sentiment_score}/10) - {sentiment_record.timestamp.strftime('%Y-%m-%d %H:%M')}"):
+                    result = sentiment_record.result
+                    st.write(f"**Sentiment Score:** {result.get('sentiment_score', 'N/A')}/10")
+                    st.write(f"**Attrition Risk:** {result.get('attrition_risk', 'N/A')}")
+                    st.write(f"**Key Concerns:** {', '.join(result.get('key_concerns', ['N/A']))}")
+                    st.write(f"**Positive Aspects:** {', '.join(result.get('positive_aspects', ['N/A']))}")
+                    st.write(f"**Summary:** {result.get('summary', 'N/A')}")
+        else:
+            st.info("No previous sentiment analyses found.")
+    except Exception as e:
+        st.error(f"Error loading previous sentiment analyses: {str(e)}")
 
 st.markdown("---")
 st.markdown("© 2024 AI HR Assistant | Powered by Google Gemini AI")
