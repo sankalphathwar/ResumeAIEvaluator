@@ -1,0 +1,10 @@
+streamlit
+pandas
+plotly
+google-generativeai
+sqlalchemy
+psycopg2-binary
+python-docx
+docx2txt
+pypdf2
+python-dotenv
